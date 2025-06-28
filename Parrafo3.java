@@ -1,34 +1,32 @@
 public class NotificationSystem {
+
     public interface Notification {
         void sendNotification();
     }
 
-    public static class BasicNotification implements Notification {
+    public static class ConcreteNotification implements Notification {
         @Override
         public void sendNotification() {
-            System.out.println("Enviando notificación básica (SMS + Email).");
+            System.out.println("Enviando notificación básica.");
         }
     }
 
     public static abstract class NotificationDecorator implements Notification {
-        protected final Notification decoratedNotification;
+        protected Notification notification;
 
-        public NotificationDecorator(Notification decoratedNotification) {
-            if(decoratedNotification == null) {
-                throw new IllegalArgumentException("Notificación no puede ser nula");
-            }
-            this.decoratedNotification = decoratedNotification;
+        public NotificationDecorator(Notification notification) {
+            this.notification = notification;
         }
 
         @Override
         public void sendNotification() {
-            decoratedNotification.sendNotification();
+            notification.sendNotification();
         }
     }
 
     public static class WhatsappDecorator extends NotificationDecorator {
-        public WhatsappDecorator(Notification decoratedNotification) {
-            super(decoratedNotification);
+        public WhatsappDecorator(Notification notification) {
+            super(notification);
         }
 
         @Override
@@ -39,8 +37,8 @@ public class NotificationSystem {
     }
 
     public static class SignalDecorator extends NotificationDecorator {
-        public SignalDecorator(Notification decoratedNotification) {
-            super(decoratedNotification);
+        public SignalDecorator(Notification notification) {
+            super(notification);
         }
 
         @Override
@@ -51,8 +49,8 @@ public class NotificationSystem {
     }
 
     public static class WireDecorator extends NotificationDecorator {
-        public WireDecorator(Notification decoratedNotification) {
-            super(decoratedNotification);
+        public WireDecorator(Notification notification) {
+            super(notification);
         }
 
         @Override
@@ -63,8 +61,8 @@ public class NotificationSystem {
     }
 
     public static class TelegramDecorator extends NotificationDecorator {
-        public TelegramDecorator(Notification decoratedNotification) {
-            super(decoratedNotification);
+        public TelegramDecorator(Notification notification) {
+            super(notification);
         }
 
         @Override

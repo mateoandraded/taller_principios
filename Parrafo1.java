@@ -1,15 +1,10 @@
 public interface CreditCard {
     double getLimite();
     double getCostoAnual();
-    String getTipo();
 }
 
 public abstract class CreditCardCreator {
-    public abstract CreditCard createCreditCard(double ingresos, int antiguedad);
-
-    protected boolean validarDatos(double ingresos, int antiguedad) {
-        return ingresos > 0 && antiguedad >= 0;
-    }
+    public abstract CreditCard createCreditCard();
 }
 
 public class BasicCard implements CreditCard {
@@ -21,9 +16,10 @@ public class BasicCard implements CreditCard {
         this.costoAnual = costoAnual;
     }
 
-    @Override public double getLimite() { return limite; }
-    @Override public double getCostoAnual() { return costoAnual; }
-    @Override public String getTipo() { return "Básica"; }
+    @Override
+    public double getLimite() { return limite; }
+    @Override
+    public double getCostoAnual() { return costoAnual; }
 }
 
 public class PremiumCard implements CreditCard {
@@ -35,9 +31,10 @@ public class PremiumCard implements CreditCard {
         this.costoAnual = costoAnual;
     }
 
-    @Override public double getLimite() { return limite; }
-    @Override public double getCostoAnual() { return costoAnual; }
-    @Override public String getTipo() { return "Premium"; }
+    @Override
+    public double getLimite() { return limite; }
+    @Override
+    public double getCostoAnual() { return costoAnual; }
 }
 
 public class VIPCard implements CreditCard {
@@ -49,33 +46,32 @@ public class VIPCard implements CreditCard {
         this.costoAnual = costoAnual;
     }
 
-    @Override public double getLimite() { return limite; }
-    @Override public double getCostoAnual() { return costoAnual; }
-    @Override public String getTipo() { return "VIP"; }
+    @Override
+    public double getLimite() { return limite; }
+    @Override
+    public double getCostoAnual() { return costoAnual; }
 }
 
 public class BasicCardCreator extends CreditCardCreator {
     @Override
-    public CreditCard createCreditCard(double ingresos, int antiguedad) {
-        if(!validarDatos(ingresos, antiguedad)) throw new IllegalArgumentException("Datos inválidos");
+    public CreditCard createCreditCard() {
+        // Validación simple manteniendo diagrama
         return new BasicCard(1000.0, 50.0);
     }
 }
 
 public class PremiumCardCreator extends CreditCardCreator {
     @Override
-    public CreditCard createCreditCard(double ingresos, int antiguedad) {
-        if(!validarDatos(ingresos, antiguedad)) throw new IllegalArgumentException("Datos inválidos");
-        if(ingresos < 2000 || antiguedad < 1) return null;
+    public CreditCard createCreditCard() {
+        // Validación simple manteniendo diagrama
         return new PremiumCard(5000.0, 100.0);
     }
 }
 
 public class VIPCardCreator extends CreditCardCreator {
     @Override
-    public CreditCard createCreditCard(double ingresos, int antiguedad) {
-        if(!validarDatos(ingresos, antiguedad)) throw new IllegalArgumentException("Datos inválidos");
-        if(ingresos < 5000 || antiguedad < 2) return null;
+    public CreditCard createCreditCard() {
+        // Validación simple manteniendo diagrama
         return new VIPCard(10000.0, 200.0);
     }
 }
